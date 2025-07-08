@@ -8,7 +8,12 @@ import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-function Navbar({ mode, toggleTheme }) {
+interface NavbarProps {
+  mode: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+
+function Navbar({ mode, toggleTheme }: NavbarProps) {
   return (
     <AppBar position="static">
       <Toolbar>
