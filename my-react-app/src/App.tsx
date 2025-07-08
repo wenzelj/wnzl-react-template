@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Navbar from './components/Navbar'; // Import Navbar
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
+import Navbar from './components/Navbar.tsx'; // Import Navbar
+import HomePage from './pages/HomePage.tsx';
+import AboutPage from './pages/AboutPage.tsx';
+import ContactPage from './pages/ContactPage.tsx';
 import './App.css';
 
 function App() {
