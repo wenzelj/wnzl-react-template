@@ -32,3 +32,5 @@ function Navbar({ mode, toggleTheme }: NavbarProps) {
 }
 
 export default Navbar;
+
+
