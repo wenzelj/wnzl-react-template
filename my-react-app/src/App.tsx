@@ -1,13 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Navbar from './components/Navbar.tsx'; // Import Navbar
-import HomePage from './pages/HomePage.tsx';
-import AboutPage from './pages/AboutPage.tsx';
-import ContactPage from './pages/ContactPage.tsx';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);
   const [mode, setMode] = useState('light');
 
   const theme = useMemo(
@@ -26,11 +30,21 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar mode={mode} toggleTheme={toggleTheme} /> {/* Add Navbar here */}
+      <Navbar mode={mode} toggleTheme={toggleTheme} user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute user={user}>
+              <ProfilePage user={user} />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </ThemeProvider>
   );
