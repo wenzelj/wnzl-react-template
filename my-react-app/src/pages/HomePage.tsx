@@ -1,33 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { productService } from '../services/ProductService';
-import { Product } from '../types/product';
+import React from 'react';
+import { useProducts } from '../hooks/useProducts';
 
 function HomePage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const fetchedProducts = await productService.fetchAllProducts();
-        setProducts(fetchedProducts);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unknown error occurred.');
-        }
-        console.error("Failed to load products:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
+  const { products, loading, error } = useProducts();
 
   if (loading) {
     return (
@@ -42,7 +17,7 @@ function HomePage() {
     return (
       <div>
         <h1>Home Page</h1>
-        <p style={{ color: 'red' }}>Error loading products: {error}</p>
+        <p style={{ color: 'red' }}>Error loading products: {error.message}</p>
       </div>
     );
   }

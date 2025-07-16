@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { getTodos } from '../repositories/TodoRepository';
-import { Todo } from '../types/todo';
+import React from 'react';
+import { useTodos } from '../hooks/useTodos';
 
 function AboutPage() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const loadTodos = async () => {
-      try {
-        setLoading(true);
-        const fetchedTodos = await getTodos();
-        setTodos(fetchedTodos);
-      } catch (error) {
-        console.error('Failed to load todos:', error);
-        // Optionally, set an error state here to display to the user
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadTodos();
-  }, []);
+  const { todos, loading, error } = useTodos();
 
   if (loading) {
     return (
       <div>
         <h1>About Page</h1>
         <p>Loading todos...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <h1>About Page</h1>
+        <p style={{ color: 'red' }}>Error loading todos: {error.message}</p>
       </div>
     );
   }
